@@ -1,0 +1,7 @@
+#displayItemsGrid .actionButton:hover {
+    cursor: pointer;
+}
+
+input {
+    width: 50%;
+}

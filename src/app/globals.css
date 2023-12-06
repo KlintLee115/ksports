@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navIcons {
+    @apply w-6 aspect-square h-full cursor-pointer
+}
