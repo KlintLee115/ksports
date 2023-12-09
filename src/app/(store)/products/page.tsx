@@ -31,13 +31,13 @@ function ItemsSection() {
         const priceSort = searchParams.get("sortType") || undefined
 
         // Filter keys that start with "subDir"
-        const subDirsKeys = Array.from(searchParams.keys()).filter(key => key.startsWith('subDir'));
-        const subDirsValues = subDirsKeys.map(key => searchParams.get(key)).filter(value => value !== null) as string[];
+        // const subDirsKeys = Array.from(searchParams.keys()).filter(key => key.startsWith('subDir'));
+        // const subDirsValues = subDirsKeys.map(key => searchParams.get(key)).filter(value => value !== null) as string[];
 
-        const subDirsResult = subDirsValues.length === 0 ? undefined : subDirsValues
+        // const subDirsResult = subDirsValues.length === 0 ? undefined : subDirsValues
 
         async function getDataAndSetProducts() {
-            const data = await getProducts(undefined, subDirsResult, productName, minPrice ? parseInt(minPrice) : undefined, maxPrice ? parseInt(maxPrice) : undefined, priceSort)
+            const data = await getProducts(undefined, productName, minPrice ? parseInt(minPrice) : undefined, maxPrice ? parseInt(maxPrice) : undefined, priceSort)
             setDisplayItems(data);
         }
 
@@ -46,26 +46,23 @@ function ItemsSection() {
 
 
     return <div style={{ overflowX: "hidden", width: "100%" }}>
-        {!(searchParams.get('sideNav') === "true") ? (
-            <>
+        <div className='relative z-10 mx-6'>
 
-                <Suspense fallback={<h1>Loading...</h1>}>
-                    <NavBar />
-                    <SearchBar />
-                </Suspense>
+            <Suspense fallback={<h1>Loading...</h1>}>
+                <NavBar />
+                <SearchBar />
+            </Suspense>
 
-                {displayItems ? (
-                    <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
-                        <div><h3 style={{ marginTop: 0 }}>{displayItems?.size || 0} items
-                        </h3>
-                            <SortAndFilter />
-                        </div>
-                        <DisplayItemsGrid products={displayItems} />
+            {displayItems ? (
+                <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
+                    <div><h3 style={{ marginTop: 0 }}>{displayItems?.size || 0} items
+                    </h3>
+                        <SortAndFilter />
                     </div>
-                )
-                    : <ProductsLoadingCircle />}
-            </>)
-            : <></>
-        }
+                    <DisplayItemsGrid products={displayItems} />
+                </div>
+            )
+                : <ProductsLoadingCircle />}
+        </div>
     </div>
 }

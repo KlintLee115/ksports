@@ -21,25 +21,26 @@ function ProductsDisplayGrid({ products }: { products: productsStorageType }) {
                 return (
                     <div key={id} className="sm:w-auto sm:flex sm:flex-col sm:justify-end mx-auto">
                         <div className="relative w-[100%] min-h-[30vh]">
-                            <Image fill={true} objectFit="fill" alt="product" style={{ margin: "0 auto" }} src={`/products${imageSrc}`} />
+                            <Image quality={50} fill={true} sizes="100%" alt="product" src={`/products${imageSrc}`} />
                         </div>
                         <h4 style={{ margin: "2vh 0" }}>{itemName}</h4>
 
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <h5 style={{ margin: 0 }}>${price}</h5>
+                        <div className="flex justify-between items-center">
+                            <h5 className="m-0">${price}</h5>
 
-                            <div style={{
-                                display: "flex", width: "35%",
-                                justifyContent: "space-evenly", alignItems: "center"
-                            }}>
+                            <div className="flex min-w-min max-w-[50%] justify-evenly items-center">
 
-                                <h3 style={{ margin: 0, cursor: "pointer" }} className="actionButton" onClick={() => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity - 1, price: price } })}>-</h3>
-                                <input style={{ width: "50%" }} type="number" onChange={(e) => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: e.target.valueAsNumber, price: price } })} value={quantity}></input>
-                                <h3 style={{ margin: 0, cursor: "pointer" }} className="actionButton" onClick={() => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity + 1, price: price } })}>+</h3>
+                                <h3 className="m-0 cursor-pointer" onClick={() => {
+                                    if (quantity > 0) {
+                                        setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity - 1, price: price } })
+                                    }
+                                }}>-</h3>
+                                <input className="w-1/2 text-center" type="number" onChange={(e) => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: e.target.valueAsNumber, price: price } })} value={quantity}></input>
+                                <h3 className="m-0 cursor-pointer" onClick={() => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity + 1, price: price } })}>+</h3>
                             </div>
 
                         </div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div className="flex justify-between items-center">
                             <h6 style={{ margin: 0 }}>Image by: <a href={authorLink} style={{ textDecoration: "none", color: "rgb(0, 0, 238)" }}>{authorName}</a></h6>
                             <a href={imageCredit} style={{ fontSize: "0.67em", fontWeight: "bold", textDecoration: "none", color: "rgb(0, 0, 238)" }}>Image source</a>
                         </div>

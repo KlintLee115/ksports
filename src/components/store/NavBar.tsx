@@ -34,7 +34,7 @@ export default () => {
             <h3 onClick={() => router.push('/')} className="cursor-pointer bg-blue-600 absolute left-1/2 px-4 py-2 text-white transform -translate-x-1/2">K Sports</h3>
 
             <div className="flex items-center" style={{ gap: "2vw" }}>
-                {UserProfileComponents}
+                {/* {UserProfileComponents} */}
                 <img alt='cart' className="navIcons" src='/icons/cart.png'
                     onClick={() => router.push("/checkout")} />
             </div>

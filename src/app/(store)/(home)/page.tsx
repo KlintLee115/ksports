@@ -6,20 +6,18 @@ import Banner from '@/components/store/home/banner/Banner'
 import RecommendedSection from '@/components/store/home/recommended/RecommendedSection'
 import { Suspense } from 'react'
 
-export default function Home({ searchParams }: { searchParams: { [key: string]: string } }) {
+export default function Home() {
 
-  return <div style={{ width: "90vw", overflowX: "hidden", margin: '0 auto' }}>
+  return <div>
     <SideNav />
-    {!(searchParams.sideNav === "true") ? (<>
+    <div className='relative z-10 mx-6'>
       <Suspense fallback={<h1>Loading...</h1>}>
         <NavBar />
-        <SideNav />
         <SearchBar />
       </Suspense>
-      <Banner/>
+      <Banner />
       <RecommendedSection />
       <Footer />
-    </>) : <></>
-    }
+    </div>
   </div>
 }

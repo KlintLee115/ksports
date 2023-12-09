@@ -9,7 +9,7 @@ const BannerProductsInfo:
 const BannerItems: JSX.Element[] = []
 
 BannerProductsInfo.forEach(value => {
-    BannerItems.push(<div className="flex items-center h-full w-[70%] mx-auto">
+    BannerItems.push(<div className="flex items-center h-full w-[80%] mx-auto relative">
         <Image fill={true} objectFit="contain" alt="image" src={`/products${value}`} />
     </div>)
 })

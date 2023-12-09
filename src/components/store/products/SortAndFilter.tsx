@@ -14,9 +14,9 @@ export default function SortAndFilter() {
         router.push(`${currPathName}?${newSearchString}`)
     }
 
-    return <div className="flex flex-row gap-[10vw] sm:flex sm:flex-col sm:gap-0" style={{width:"fit-content"}}>
+    return <div className="flex flex-row gap-[10vw] items-baseline sm:flex sm:flex-col sm:gap-0 w-fit">
         <div>
-            <label style={{ fontWeight: "bold", fontSize: "1.2rem", display: "block", marginTop:"2vh" }}>Price </label>
+            <label style={{ fontWeight: "bold", fontSize: "1.2rem", display: "block", marginTop: "2vh" }}>Price </label>
             <select onChange={e => addParam("sortType", e.target.value)}
                 value={searchParams.get("sortType") || PRICE_SORT.LOW_TO_HIGH.toString()}>
                 <option value={PRICE_SORT.LOW_TO_HIGH.toString()}>Low to high</option>
@@ -29,13 +29,25 @@ export default function SortAndFilter() {
             <div style={{ display: "flex" }}>
                 <label>Min: </label>
                 <input
-                    onChange={e => addParam("min", e.target.value)}
-                    type="number" style={{ width: "5rem", marginLeft: "0.5rem" }} />
+                    min={0}
+                    onChange={e => {
+                        if (e.target.valueAsNumber >= 0) {
+                            addParam("min", e.target.value)
+                        }
+                    }
+                    }
+                    type="number" style={{ width: "5rem", marginLeft: "0.5rem", border: "1px solid black" }} />
             </div>
             <div style={{ display: "flex", marginTop: "1vh" }}>
                 <label>Max: </label>
-                <input onChange={e => addParam("max", e.target.value)}
-                    type="number" style={{ width: "5rem", marginLeft: "0.5rem" }} />
+                <input
+                    min={0}
+                    onChange={e => {
+                        if (e.target.valueAsNumber >= 0) {
+                            addParam("max", e.target.value)
+                        }
+                    }}
+                    type="number" style={{ width: "5rem", marginLeft: "0.5rem", border: "1px solid black" }} />
             </div>
         </div>
     </div>

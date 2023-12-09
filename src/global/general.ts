@@ -65,7 +65,7 @@ export async function fetchData(endpoint: string, requestData: any) {
 }
 
 
-export async function getProducts(ids?: number[], subDirs?: string[], productName?: string, minPrice?: number, maxPrice?: number, priceSort?: string): Promise<productsStorageType> {
+export async function getProducts(ids?: number[], productName?: string, minPrice?: number, maxPrice?: number, priceSort?: string): Promise<productsStorageType> {
 
     try {
         const response = await fetch(`${backendHost}products`,
@@ -81,7 +81,6 @@ export async function getProducts(ids?: number[], subDirs?: string[], productNam
                     minPrice: minPrice?.toString(),
                     maxPrice: maxPrice?.toString(),
                     priceSort,
-                    subDirs
                 })
             })
         const data: any[] = await response.json()
