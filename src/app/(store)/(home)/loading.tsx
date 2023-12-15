@@ -48,6 +48,7 @@ export default function HomeSkel() {
       </div>
     </div>
 
+    
     <RecommendedSection />
     <Footer />
   </div>
