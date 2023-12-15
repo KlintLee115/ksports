@@ -1,12 +1,29 @@
 import RecommendedItem from './RecommendedItem';
-import { getProducts } from '../../../../global/general';
 
-const RecommendProductsIds: number[] = [2, 3, 8]
-const RecommendedProductsDescriptions: string[] = ["Price Drops", "New Arrivals", "Best Sellers"]
+const RecommendedProductsInfo:
+    Map<number, { img: string, desc: string, name: string }> = new Map([
+        [2, {
+            img: "/shirts/camilla-carvalho-Cgb4gMKRcMA-unsplash.jpg",
+            name:"lol",
+            desc: "Price Drops"
+        }],
+        [3, {
+            img: "/shoes/emily-pottiger-Zx76sbAndc0-unsplash.jpg",
+            desc: "New Arrivals",
+            name:"regege"
+        }],
+        [8, {
+            img: "/shoes/yellow-shoe.jpg", desc: "Best Sellers", name:"rbrb"
+        }]])
 
-export default async function RecommendedSection() {
+const RecommendedItems: JSX.Element[] = []
 
-    const recommendedItems = await getProducts(RecommendProductsIds)
+RecommendedProductsInfo.forEach(value => {
+    RecommendedItems.push(<RecommendedItem key={value.img} imageSrc={`products${value.img}`}
+    name={value.name} description={value.desc} />)
+})
+
+export default function RecommendedSection() {
 
     return (
         <div style={{ marginTop: "5vh", overflowX: "auto" }}>
@@ -15,11 +32,7 @@ export default async function RecommendedSection() {
 
                 <h1>Our recommendations</h1>
 
-                {Array.from(recommendedItems.keys()).map((id, idx) => {
-
-                    return <RecommendedItem key={id} imageSrc={`products${recommendedItems.get(id)!!.imageSrc}`}
-                        name={recommendedItems.get(id)!!.itemName} description={RecommendedProductsDescriptions[idx]} />
-                })}
+                {RecommendedItems}
             </div>
         </div>
     );

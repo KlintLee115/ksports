@@ -31,7 +31,7 @@ export default function Home() {
       return () => mainSection.removeEventListener('click', handleMainSectionClick)
     }
   }, [searchParams.get('sideNav')])
-  
+
 
   return <div>
     <SideNav />
