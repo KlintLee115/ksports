@@ -6,8 +6,9 @@ import SearchBar from "@/components/store/SearchBar";
 import DisplayItemsGrid from "@/components/store/products/DisplayItemsGrid";
 import SortAndFilter from "@/components/store/products/SortAndFilter";
 import { productsStorageType, getProducts } from "@/global/general";
-import { useSearchParams } from "next/navigation";
-import { useState, useEffect, Suspense } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense, useRef } from "react";
 
 export default function ProductsPage() {
 
@@ -18,7 +19,28 @@ export default function ProductsPage() {
 
 function ItemsSection() {
     const [displayItems, setDisplayItems] = useState<productsStorageType>()
-    const searchParams = useSearchParams();
+    
+    const mainSectionRef = useRef<HTMLDivElement>(null)
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const router = useRouter()
+  
+    const handleMainSectionClick = () => {
+      if (searchParams.get('sideNav') === 'true') {
+        router.push(pathname);
+      }
+    };
+  
+    useEffect(() => {
+      const mainSection = mainSectionRef.current;
+  
+      if (mainSection) {
+  
+        mainSection.addEventListener('click', handleMainSectionClick)
+  
+        return () => mainSection.removeEventListener('click', handleMainSectionClick)
+      }
+    }, [searchParams.get('sideNav')])
 
     useEffect(() => {
         const productName = searchParams.get("name") || undefined
@@ -35,7 +57,7 @@ function ItemsSection() {
     }, [searchParams])
 
 
-    return <div className='relative z-10 overflow-x-hidden w-[90vw] mx-auto'>
+    return <div className='relative z-10 overflow-x-hidden w-[90vw] mx-auto' ref={mainSectionRef}>
 
         <Suspense fallback={<h1>Loading...</h1>}>
             <NavBar />
