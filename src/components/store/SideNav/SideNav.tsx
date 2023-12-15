@@ -33,8 +33,8 @@ export default function SideNav() {
             <AsideProductsNavLink key={"HOME"} linkTo="/" displayText='HOME' />
             <AsideProductsNavLink key={"tmo"} linkTo="/trackmyorder" displayText='TRACK MY ORDER' />
             <AsideProductsNavLink key={"ai"} linkTo='/products' displayText='ALL ITEMS' />
-            <AsideProductsNavLink key={"signup"} linkTo="/SignUpLogin?action=SignUp" displayText='Sign Up' />
-            <AsideProductsNavLink key={"login"} linkTo="/SignUpLogin?action=LogIn" displayText='Log In' />
+            {/* <AsideProductsNavLink key={"signup"} linkTo="/SignUpLogin?action=SignUp" displayText='Sign Up' /> */}
+            {/* <AsideProductsNavLink key={"login"} linkTo="/SignUpLogin?action=LogIn" displayText='Log In' /> */}
         </aside >
     )
 }

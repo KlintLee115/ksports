@@ -2,7 +2,7 @@
 
 import { CSSProperties } from "react";
 import Header from "../../components/OtherHeader";
-import { fetchData, useIsSideProductsMenuToggled,  } from "../../global/general";
+import { fetchData } from "../../global/general";
 import {useRouter, useSearchParams} from 'next/navigation'
 
 enum FormActions {
@@ -22,7 +22,6 @@ const styles: { [key: string]: CSSProperties } = {
 
 export default function SignUpLogin() {
 
-  const { setIsSideNavProductsMenuToggled: setIsSideNavToggled } = useIsSideProductsMenuToggled()
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -41,7 +40,6 @@ export default function SignUpLogin() {
         if (data.length > 0) {
           localStorage.setItem('currUserEmail', email);
           alert('Successfully logged in')
-          setIsSideNavToggled(false);
           router.push('/')
         } else {
           alert('Login failed');
@@ -52,7 +50,6 @@ export default function SignUpLogin() {
       case FormActions.SignUp.replace(/\s+/g, ''):
         fetchData('createAcc', { email, password }).then(() => {
           localStorage.setItem('currUserEmail', email);
-          setIsSideNavToggled(false);
           router.push('/')
         })
         break;

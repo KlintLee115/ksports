@@ -30,13 +30,13 @@ function ProductsDisplayGrid({ products }: { products: productsStorageType }) {
 
                             <div className="flex min-w-min max-w-[50%] justify-evenly items-center">
 
-                                <h3 className="m-0 cursor-pointer" onClick={() => {
+                                <h2 className="m-0 cursor-pointer" onClick={() => {
                                     if (quantity > 0) {
                                         setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity - 1, price: price } })
                                     }
-                                }}>-</h3>
+                                }}>-</h2>
                                 <input className="w-1/2 text-center" type="number" onChange={(e) => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: e.target.valueAsNumber, price: price } })} value={quantity}></input>
-                                <h3 className="m-0 cursor-pointer" onClick={() => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity + 1, price: price } })}>+</h3>
+                                <h2 className="m-0 cursor-pointer" onClick={() => setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity + 1, price: price } })}>+</h2>
                             </div>
 
                         </div>

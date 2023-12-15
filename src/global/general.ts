@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+// import { create } from 'zustand'
 
 // const backendHost = "http://localhost:3000/"
 const backendHost = "https://ksportsbackend.onrender.com/"
@@ -28,16 +28,6 @@ export type checkoutItemStructure = {
 }
 
 export type productsStorageType = Map<number, productsType>
-
-interface IsSideProductsMenuToggledState {
-    isSideNavProductsMenuToggled: boolean;
-    setIsSideNavProductsMenuToggled: (isSideNavProductsMenuToggled: boolean) => void;
-}
-
-export const useIsSideProductsMenuToggled = create<IsSideProductsMenuToggledState>((set) => ({
-    isSideNavProductsMenuToggled: false,
-    setIsSideNavProductsMenuToggled: (isSideNavToggled: boolean) => set({ isSideNavProductsMenuToggled: isSideNavToggled }),
-}));
 
 export function getCookieValue(cookieName: string) {
     const cookies = document.cookie.split(';');
