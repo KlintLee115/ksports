@@ -55,7 +55,8 @@ export default function ProductsPage() {
             }
 
             getDataAndSetProducts()
-        }, [searchParams])
+        }, [searchParams.get('name'), searchParams.get("max"), searchParams.get("min"),
+        searchParams.get("sortType")  ])
 
 
         return <div style={{ overflowX: "hidden", width: "100%" }} ref={mainSectionRef}>

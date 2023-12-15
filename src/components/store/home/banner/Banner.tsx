@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import ProductsLoadingCircle from "../../../ProductsLoadingCircle"
 import BannerItems from "./BannerItems"
 
 export default function Banner() {
@@ -29,5 +28,5 @@ export default function Banner() {
                 </div>
             }
             )}
-        </div>) : <ProductsLoadingCircle />
+        </div>) : <h1>Nothing to show</h1>
 }

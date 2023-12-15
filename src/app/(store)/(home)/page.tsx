@@ -7,7 +7,7 @@ import SideNav from '@/components/store/SideNav/SideNav'
 import Banner from '@/components/store/home/banner/Banner'
 import RecommendedSection from '@/components/store/home/recommended/RecommendedSection'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import { Suspense, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function Home() {
   const router = useRouter()
@@ -32,16 +32,15 @@ export default function Home() {
     }
   }, [searchParams.get('sideNav')])
   
+
   return <div>
-    <Suspense fallback={<h1>Loading...</h1>}>
-      <SideNav />
-      <div className='relative z-10 mx-6' ref={mainSectionRef}>
-        <NavBar />
-        <SearchBar />
-        <Banner />
-        <RecommendedSection />
-        <Footer />
-      </div>
-    </Suspense>
+    <SideNav />
+    <div className='relative z-10 mx-6' ref={mainSectionRef}>
+      <NavBar />
+      <SearchBar />
+      <Banner />
+      <RecommendedSection />
+      <Footer />
+    </div>
   </div>
 }
