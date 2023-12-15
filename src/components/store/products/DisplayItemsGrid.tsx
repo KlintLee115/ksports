@@ -1,21 +1,25 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 import ProductsLoadingCircle from "../../ProductsLoadingCircle";
 import { productsStorageType } from "../../../global/general";
 import { useCookies } from "react-cookie";
 import Image from 'next/image'
 
-function ProductsDisplayGrid({ products }: { products: productsStorageType }) {
+const ProductsDisplayGrid = memo(({ products }: { products: productsStorageType }) => {
 
     const [cookies, setCookie] = useCookies(['cart']);
     const cart = cookies.cart as { [key: string]: { itemName: string, imageSrc: string, quantity: number, price: number } }
 
-    if (products) {
+    const productsToRender = useMemo(() => products, [products]);
+
+    if (productsToRender) {
+
+        console.log('sure')
 
         return <div id="displayItemsGrid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" style={{ gridRowGap: "12vh", gridColumnGap: "7%" }}>
 
-            {Array.from(products.keys()).map(id => {
+            {Array.from(productsToRender.keys()).map(id => {
 
-                const { itemName, price, imageSrc, authorLink, authorName, imageCredit } = products.get(id)!!;
+                const { itemName, price, imageSrc, authorLink, authorName, imageCredit } = productsToRender.get(id)!!;
                 const { quantity = 0 } = (cart && cart[id]) || {}
 
                 return (
@@ -52,6 +56,10 @@ function ProductsDisplayGrid({ products }: { products: productsStorageType }) {
         </div>
     }
     else return <ProductsLoadingCircle />
-}
+}, (prevProps, nextProps) => {
+    // console.log(prevProps.products)
+    // console.log(nextProps.products)
+    return true
+})
 
 export default ProductsDisplayGrid
