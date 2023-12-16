@@ -35,7 +35,7 @@ export default function SideNav() {
                 'z-20 px-[4vw] border-0 bg-cyan-300 w-full sm:w-fit' : 'w-0'}`}>
             <AsideProductsNavLink key={"HOME"} linkTo="/" displayText='HOME' />
             <AsideProductsNavLink key={"tmo"} linkTo="/trackmyorder" displayText='TRACK MY ORDER' />
-            <AsideProductsNavLink key={"ai"} linkTo='/products' displayText='ALL ITEMS' />
+            {/* <AsideProductsNavLink key={"ai"} linkTo='/products' displayText='ALL ITEMS' /> */}
             {/* <AsideProductsNavLink key={"signup"} linkTo="/SignUpLogin?action=SignUp" displayText='Sign Up' /> */}
             {/* <AsideProductsNavLink key={"login"} linkTo="/SignUpLogin?action=LogIn" displayText='Log In' /> */}
         </aside >

@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer";
 import BannerItems from "@/components/store/home/banner/BannerItems";
-import RecommendedSection from "@/components/store/home/recommended/RecommendedSection";
 
 export default function HomeSkel() {
   return <div className='relative z-10 mx-6'>
@@ -48,8 +47,6 @@ export default function HomeSkel() {
       </div>
     </div>
 
-    
-    <RecommendedSection />
-    <Footer />
+        <Footer />
   </div>
 }

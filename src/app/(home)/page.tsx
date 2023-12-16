@@ -1,8 +1,10 @@
 "use client"
 
+import Footer from "@/components/Footer";
 import NavBar from "@/components/store/NavBar";
 import SearchBar from "@/components/store/SearchBar";
 import SideNav from "@/components/store/SideNav/SideNav";
+import Banner from "@/components/store/home/banner/Banner";
 import DisplayItemsGrid from "@/components/store/products/DisplayItemsGrid";
 import SortAndFilter from "@/components/store/products/SortAndFilter";
 import { productsStorageType, getProducts } from "@/global/general";
@@ -46,8 +48,11 @@ export default function ProductsPage() {
         <div ref={mainSectionRef}>
             <NavBar />
             <SearchBar />
+            <Banner/>
             <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={sideNav} />
         </div>
+      <Footer />
+
     </div>
 }
 
@@ -88,7 +93,7 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
                 <DisplayItemsGrid products={displayItems} />
             </div>
         )
-            : <h3>No items to display</h3>}
+        : <h3 className="text-center my-[5vh]">No items to display</h3>}
     </div>
 }, (prevProps, nextProps) => {
     return prevProps.name === nextProps.name &&
