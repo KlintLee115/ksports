@@ -11,7 +11,9 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
 
     if (products) {
 
-        return <div id="displayItemsGrid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" style={{ gridRowGap: "12vh", gridColumnGap: "7%" }}>
+        return <div className="
+        grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
+        " style={{ gridRowGap: "12vh", gridColumnGap: "7%" }}>
 
             {Array.from(products.keys()).map(id => {
 
@@ -20,7 +22,7 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
 
                 return (
                     <div key={id} className="sm:w-auto sm:flex sm:flex-col sm:justify-end mx-auto">
-                        <div className="relative w-[100%] min-h-[30vh]">
+                        <div className="relative min-h-[30vh]">
                             <Image quality={50} fill={true} sizes="100%" alt="product" src={`/products${imageSrc}`} />
                         </div>
                         <h4 style={{ margin: "2vh 0" }}>{itemName}</h4>

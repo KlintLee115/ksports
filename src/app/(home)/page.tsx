@@ -45,13 +45,13 @@ export default function ProductsPage() {
 
     return <div style={{ width: "90vw", margin: "0 auto" }}>
         <SideNav />
-        <div ref={mainSectionRef}>
+        <div ref={mainSectionRef} className={sideNav === "true" ? "blur-[3px]" : "blur-0"}>
             <NavBar />
             <SearchBar />
-            <Banner/>
+            <Banner />
             <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={sideNav} />
+            <Footer />
         </div>
-      <Footer />
 
     </div>
 }
@@ -82,19 +82,15 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
     }, [name, min, max, sortType])
 
 
-    return <div className="overflow-x-hidden w-full relative z-10 mx-6">
-
-        {displayItems ? (
-            <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
-                <div>
-                    <h3 className="mt-0">{displayItems?.size || 0} items</h3>
-                    <SortAndFilter />
-                </div>
-                <DisplayItemsGrid products={displayItems} />
+    return displayItems ? (
+        <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
+            <div className="sticky top-[13vh] h-fit pb-[10vh] sm:pb-0 z-10 bg-white w-fit mx-auto">
+                <SortAndFilter itemsLength={displayItems.size}/>
             </div>
-        )
-        : <h3 className="text-center my-[5vh]">No items to display</h3>}
-    </div>
+            <DisplayItemsGrid products={displayItems} />
+        </div>
+    )
+        : <h3 className="text-center my-[5vh]">No items to display</h3>
 }, (prevProps, nextProps) => {
     return prevProps.name === nextProps.name &&
         prevProps.max === nextProps.max &&
