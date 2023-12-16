@@ -8,17 +8,20 @@ export default function SideNav() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const handleAsideProductsMenuClick = (linkTo?: string) => {
-        if (!linkTo) {
-            throw "Must have either linkTo or a current directory layer index"
-        }
+    const handleAsideProductsMenuClick = (linkTo: string) => {
 
-        // must use !== undefined, the index can be 0, if(0) is equivalent to if(false)
-        router.push(linkTo!!)
+        if (linkTo !== '/products') {
+            router.push(linkTo)
+        }
+        else {
+            const newSearchParams = new URLSearchParams(searchParams)
+            newSearchParams.delete('sideNav')
+            router.push(`${linkTo}?${newSearchParams.toString()}`)
+        }
     }
 
     function AsideProductsNavLink({ displayText, linkTo }: {
-        displayText: string, currDirLayerIdx?: number, linkTo?: string
+        displayText: string, linkTo: string
     }) {
         return <h3 className='hover:cursor-pointer hover:after:w-full
         mb-[4vh] w-fit text-2xl' style={{ textDecoration: "none" }} onClick={() => handleAsideProductsMenuClick(linkTo)}

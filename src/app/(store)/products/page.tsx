@@ -8,7 +8,7 @@ import SortAndFilter from "@/components/store/products/SortAndFilter";
 import { productsStorageType, getProducts } from "@/global/general";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { useState, useEffect, Suspense, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface ProductSearchParams {
     name: string | null;
@@ -20,17 +20,6 @@ interface ProductSearchParams {
 
 export default function ProductsPage() {
     const { name, max, min, sortType, sideNav } = useProductSearchParams();
-
-    return <div style={{ display: 'flex', columnGap: "5vw", width: "90vw", margin: "0 auto" }}>
-        <SideNav />
-        <div>
-            <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={sideNav} />
-        </div>
-    </div>
-}
-
-const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType, sideNav }) => {
-    const [displayItems, setDisplayItems] = useState<productsStorageType>()
     const mainSectionRef = useRef<HTMLDivElement>(null)
     const router = useRouter()
     const pathname = usePathname()
@@ -52,11 +41,25 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
         }
     }, [sideNav])
 
+    return <div style={{ width: "90vw", margin: "0 auto" }}>
+        <SideNav />
+        <div ref={mainSectionRef}>
+            <NavBar />
+            <SearchBar />
+            <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={sideNav} />
+        </div>
+    </div>
+}
+
+const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType }) => {
+
+    const [displayItems, setDisplayItems] = useState<productsStorageType>()
+
     useEffect(() => {
 
         const newName = name === null ? undefined : name
-        const newMin = min === null ? undefined : parseInt(min) 
-        const newMax = max === null? undefined: parseInt(max)
+        const newMin = min === null ? undefined : parseInt(min)
+        const newMax = max === null ? undefined : parseInt(max)
         const newPriceSort = sortType === null ? undefined : "LOW_TO_HIGH"
 
         // Filter keys that start with "subDir"
@@ -71,28 +74,21 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
         }
 
         getDataAndSetProducts()
-    }, [])
+    }, [name, min, max, sortType])
 
 
-    return <div style={{ overflowX: "hidden", width: "100%" }} ref={mainSectionRef}>
-        <div className='relative z-10 mx-6'>
+    return <div className="overflow-x-hidden w-full relative z-10 mx-6">
 
-            <Suspense fallback={<h1>Loading...</h1>}>
-                <NavBar />
-                <SearchBar />
-            </Suspense>
-
-            {displayItems ? (
-                <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
-                    <div><h3 style={{ marginTop: 0 }}>{displayItems?.size || 0} items
-                    </h3>
-                        <SortAndFilter />
-                    </div>
-                    <DisplayItemsGrid products={displayItems} />
+        {displayItems ? (
+            <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
+                <div>
+                    <h3 className="mt-0">{displayItems?.size || 0} items</h3>
+                    <SortAndFilter />
                 </div>
-            )
-                : <h3>No items to display</h3>}
-        </div>
+                <DisplayItemsGrid products={displayItems} />
+            </div>
+        )
+            : <h3>No items to display</h3>}
     </div>
 }, (prevProps, nextProps) => {
     return prevProps.name === nextProps.name &&

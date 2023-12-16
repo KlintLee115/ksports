@@ -19,9 +19,14 @@ export default function SearchBar() {
         <input
             onChange={(e) => {
                 const newSearchParams = new URLSearchParams(searchParams.toString());
-                newSearchParams.set("name", e.target.value)
-                const newSearchString = newSearchParams.toString()
-                router.push(`${pathName}?${newSearchString}`)
+
+                if (e.target.value === "") {
+                    newSearchParams.delete('name')
+                }
+                else {
+                    newSearchParams.set("name", e.target.value)
+                }
+                router.push(`${pathName}?${newSearchParams.toString()}`)
             }}
             style={{
                 marginLeft: "1rem", fontSize: "1.1rem",

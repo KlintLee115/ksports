@@ -6,12 +6,16 @@ export default function SortAndFilter() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const currPathName = usePathname()
+    const newSearchParams = new URLSearchParams(searchParams.toString());
 
     function addParam(key: string, value: string) {
-        const newSearchParams = new URLSearchParams(searchParams.toString());
         newSearchParams.set(key, value)
-        const newSearchString = newSearchParams.toString()
-        router.push(`${currPathName}?${newSearchString}`)
+        router.push(`${currPathName}?${newSearchParams.toString()}`)
+    }
+
+    function removeParam(key:string) {
+        newSearchParams.delete(key)
+        router.push(`${currPathName}?${newSearchParams.toString()}`)
     }
 
     return <div className="flex flex-row gap-[10vw] items-baseline sm:flex sm:flex-col sm:gap-0 w-fit">
@@ -31,7 +35,10 @@ export default function SortAndFilter() {
                 <input
                     min={0}
                     onChange={e => {
-                        if (e.target.valueAsNumber >= 0) {
+                        if(e.target.value.toString() === "") {
+                            removeParam('min')
+                        }
+                        else if (e.target.valueAsNumber >= 0) {
                             addParam("min", e.target.value)
                         }
                     }
@@ -43,7 +50,10 @@ export default function SortAndFilter() {
                 <input
                     min={0}
                     onChange={e => {
-                        if (e.target.valueAsNumber >= 0) {
+                        if(e.target.value.toString() === "") {
+                            removeParam('max')
+                        }
+                        else if (e.target.valueAsNumber >= 0) {
                             addParam("max", e.target.value)
                         }
                     }}

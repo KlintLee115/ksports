@@ -1,10 +1,12 @@
 "use client"
 
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export default () => {
 
     const pathName = usePathname()
+    const searchParams = useSearchParams()
+    const newSearchParams = new URLSearchParams(searchParams)
 
     let currUserEmail: null | string = ''
     if (typeof window !== 'undefined') {
@@ -13,24 +15,27 @@ export default () => {
 
     const router = useRouter();
 
-    const UserProfileComponents =
-        currUserEmail ?
-            <div className='hidden sm:inline-block'>
-                <h4 className='m-0 text-center'>Signed in as</h4>
-                <h4 className='m-0 text-center'>{currUserEmail}</h4>
-            </div>
-            :
-            <div className='hidden sm:inline-block'>
-                <button className='bg-transparent cursor-pointer' style={{ borderRadius: "8px", padding: "0.6em 1.2em", fontWeight: 500 }}
-                    onClick={() => router.push("/SignUpLogin?action=SignUp")}>Sign Up</button>
-                <button className='bg-transparent cursor-pointer' style={{ borderRadius: "8px", padding: "0.6em 1.2em", fontWeight: 500 }}
-                    onClick={() => router.push("/SignUpLogin?action=login")}>Login</button>
-            </div>
+    // const UserProfileComponents =
+    //     currUserEmail ?
+    //         <div className='hidden sm:inline-block'>
+    //             <h4 className='m-0 text-center'>Signed in as</h4>
+    //             <h4 className='m-0 text-center'>{currUserEmail}</h4>
+    //         </div>
+    //         :
+    //         <div className='hidden sm:inline-block'>
+    //             <button className='bg-transparent cursor-pointer' style={{ borderRadius: "8px", padding: "0.6em 1.2em", fontWeight: 500 }}
+    //                 onClick={() => router.push("/SignUpLogin?action=SignUp")}>Sign Up</button>
+    //             <button className='bg-transparent cursor-pointer' style={{ borderRadius: "8px", padding: "0.6em 1.2em", fontWeight: 500 }}
+    //                 onClick={() => router.push("/SignUpLogin?action=login")}>Login</button>
+    //         </div>
 
     return (
         <nav className="flex justify-between items-center py-4 px-0">
-            <button onClick={() => router.push(`${pathName}?sideNav=true`)} className="bg-none border-none">
-                <img className="navIcons" width={500} height={500} alt="menu-button" src={'/icons/hamburger.png'} /></button>
+            <img className="navIcons" width={500} height={500} alt="menu-button" onClick={() => {
+                newSearchParams.set('sideNav', "true")
+                router.push(`${pathName}?${newSearchParams.toString()}`)
+            }} src={'/icons/hamburger.png'} />
+
             <h3 onClick={() => router.push('/')} className="cursor-pointer bg-blue-600 absolute left-1/2 px-4 py-2 text-white transform -translate-x-1/2">K Sports</h3>
 
             <div className="flex items-center" style={{ gap: "2vw" }}>

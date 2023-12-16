@@ -58,6 +58,7 @@ export async function fetchData(endpoint: string, requestData: any) {
 export async function getProducts(ids?: number[], productName?: string, minPrice?: number, maxPrice?: number, priceSort?: string): Promise<productsStorageType> {
 
     try {
+        console.log(minPrice)
         const response = await fetch(`${backendHost}products`,
 
             {
