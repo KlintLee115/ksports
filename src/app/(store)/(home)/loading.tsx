@@ -15,7 +15,7 @@ export default function HomeSkel() {
 
     </nav>
 
-    <div className="flex sticky top-0 z-[1] px-[1rem] py-[0.5rem]"
+    {/* <div className="flex sticky top-0 z-[1] px-[1rem] py-[0.5rem]"
       style={{
         borderRadius: "1rem",
         backgroundColor: "#F3F5F5"
@@ -31,7 +31,7 @@ export default function HomeSkel() {
           width: "100%",
           backgroundColor: "#F3F5F5"
         }} type="text" placeholder='Search for a product or a sport' />
-    </div>
+    </div> */}
 
     <div className="overflow-hidden whitespace-nowrap mt-[2vh] h-[20vh] ssm:h-[25vh] sm:h-[35vh] md:h-[40vh]">
       <div

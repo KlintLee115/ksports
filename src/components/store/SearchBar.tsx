@@ -1,12 +1,25 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRef } from "react";
 
-export default function SearchBar() {
+export default function SearchBar({ isEnterClicked }: { isEnterClicked?: boolean }) {
 
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathName = usePathname()
+    const inputElement = useRef<HTMLInputElement>(null)
+
+    if (isEnterClicked) {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        const name = inputElement.current?.value
+
+        if (name) {
+            newSearchParams.set('name', name)
+
+            router.push(`/products?${newSearchParams.toString()}`)
+        }
+    }
 
     return <div className="flex sticky top-0 z-[1] px-[1rem] py-[0.5rem]"
         style={{
@@ -17,6 +30,7 @@ export default function SearchBar() {
             <img width={300} height={400} alt="search-icon" style={{ width: "1.5rem", aspectRatio: "1/1", height: "100%" }}
                 src="/icons/search.png" /></label>
         <input
+            ref={inputElement}
             onChange={(e) => {
                 const newSearchParams = new URLSearchParams(searchParams.toString());
 
