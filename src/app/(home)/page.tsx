@@ -84,7 +84,7 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
 
     return displayItems ? (
         <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
-            <div className="sticky top-[13vh] h-fit pb-[10vh] sm:pb-0 z-10 bg-white w-fit mx-auto">
+            <div className="sticky top-[13vh] h-fit pb-[10vh] sm:pb-0 z-10 bg-white w-fit max-w-fit mx-auto sm:mx-0">
                 <SortAndFilter itemsLength={displayItems.size}/>
             </div>
             <DisplayItemsGrid products={displayItems} />
