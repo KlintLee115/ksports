@@ -1,7 +1,52 @@
 import Footer from "@/components/Footer";
 import BannerItems from "@/components/store/home/banner/BannerItems";
+import { getProducts } from "@/global/general";
+import Image from 'next/image'
 
-export default function HomeSkel() {
+export default async function HomeSkel() {
+
+  const products = await getProducts(undefined, undefined, undefined, undefined, "LOW_TO_HIGH")
+
+  function DisplayItemsGrid() {
+    return <div className="
+        h-min sm:mt-[10vh] items-start
+        grid grid-cols-1 sm:grid-cols-2 sm:top-[15vh] lg:grid-cols-3 xl:grid-cols-4
+        " style={{ gridRowGap: "12vh", gridColumnGap: "7%" }}>
+
+      {Array.from(products.keys()).map(id => {
+
+        const { itemName, price, imageSrc, authorLink, authorName, imageCredit } = products.get(id)!!;
+        const quantity = 0
+
+        return (
+          <div key={id} className="sm:w-auto sm:flex sm:flex-col sm:justify-end mx-auto flex-grow">
+            <div className="relative min-h-[30vh]">
+              <Image quality={50} fill={true} sizes="100%" alt="product" src={`/products${imageSrc}`} />
+            </div>
+            <h4 className="mx-0 my-[2vh]">{itemName}</h4>
+
+            <div className="flex justify-between items-center">
+              <h5 className="m-0">${price}</h5>
+
+              <div className="flex min-w-min max-w-[50%] justify-evenly items-center">
+
+                <h2 className="m-0 cursor-pointer">-</h2>
+                <input className="w-1/2 text-center" type="number" value={quantity}></input>
+                <h2 className="m-0 cursor-pointer">+</h2>
+              </div>
+
+            </div>
+            <div className="flex justify-between items-center">
+              <h6 className="m-0">Image by: <a href={authorLink} style={{ textDecoration: "none", color: "rgb(0, 0, 238)" }}>{authorName}</a></h6>
+              <a href={imageCredit} style={{ fontSize: "0.67em", fontWeight: "bold", textDecoration: "none", color: "rgb(0, 0, 238)" }}>Image source</a>
+            </div>
+          </div>
+        )
+
+      })}
+
+    </div>
+  }
 
   return <div className='relative z-10 mx-6'>
     <nav className="flex justify-between items-center py-4 px-0">
@@ -48,8 +93,9 @@ export default function HomeSkel() {
       </div>
     </div>
 
-    <h3 className="text-center my-[5vh]">Loading items</h3>
+    <DisplayItemsGrid />
 
     <Footer />
   </div>
 }
+
