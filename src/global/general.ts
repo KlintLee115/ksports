@@ -111,6 +111,8 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
             imageSrc: item.imageSrc,
             quantity: 0
         }))
+
+        console.log('done')
         return formattedItems
     } catch (error) {
         console.log(error)
