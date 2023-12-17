@@ -1,4 +1,4 @@
-// import { create } from 'zustand'
+import { create } from 'zustand'
 
 // const backendHost = "http://localhost:3000/"
 const backendHost = "https://ksportsbackend.onrender.com/"
@@ -6,6 +6,15 @@ const backendHost = "https://ksportsbackend.onrender.com/"
 export const PRICE_SORT = {
     LOW_TO_HIGH: "LOW_TO_HIGH",
     HIGH_TO_LOW: "HIGH_TO_LOW"
+}
+
+type SortAndFilterType = {
+    SortAndFilters: {
+        min?: number;
+        max?: number;
+        sortType?: string;
+    };
+    setSortAndFilters: (SortAndFilters: Partial<SortAndFilterType['SortAndFilters']>) => void;
 }
 
 export type productsType = {
@@ -28,6 +37,22 @@ export type checkoutItemStructure = {
 }
 
 export type productsStorageType = Map<number, productsType>
+
+export const useSortAndFilters = create<SortAndFilterType>((set) => ({
+    SortAndFilters: {
+        min: undefined,
+        max: undefined,
+        sortType: undefined
+    },
+    setSortAndFilters: (newSortAndFilters) => {
+        set((current) => ({
+            SortAndFilters: {
+                ...current.SortAndFilters,
+                ...newSortAndFilters,
+            }
+        }));
+    },
+}));
 
 export function getCookieValue(cookieName: string) {
     const cookies = document.cookie.split(';');
@@ -58,7 +83,6 @@ export async function fetchData(endpoint: string, requestData: any) {
 export async function getProducts(ids?: number[], productName?: string, minPrice?: number, maxPrice?: number, priceSort?: string): Promise<productsStorageType> {
 
     try {
-        console.log(minPrice)
         const response = await fetch(`${backendHost}products`,
 
             {

@@ -2,6 +2,7 @@ import Footer from "@/components/Footer";
 import BannerItems from "@/components/store/home/banner/BannerItems";
 
 export default function HomeSkel() {
+
   return <div className='relative z-10 mx-6'>
     <nav className="flex justify-between items-center py-4 px-0">
       <button className="bg-none border-none">
@@ -47,7 +48,7 @@ export default function HomeSkel() {
       </div>
     </div>
 
-    <h3 className="text-center my-[5vh]">No items to display</h3>
+    <h3 className="text-center my-[5vh]">Loading items</h3>
 
     <Footer />
   </div>

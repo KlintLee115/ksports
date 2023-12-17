@@ -7,21 +7,28 @@ import SideNav from "@/components/store/SideNav/SideNav";
 import Banner from "@/components/store/home/banner/Banner";
 import DisplayItemsGrid from "@/components/store/products/DisplayItemsGrid";
 import SortAndFilter from "@/components/store/products/SortAndFilter";
-import { productsStorageType, getProducts } from "@/global/general";
+import { productsStorageType, getProducts, useSortAndFilters } from "@/global/general";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 
 interface ProductSearchParams {
-    name: string | null;
-    max: string | null;
-    min: string | null;
-    sortType: string | null;
+    name: string | undefined;
+    max: number | undefined;
+    min: number | undefined;
+    sortType: string | undefined;
     sideNav: string | null;
 }
 
 export default function ProductsPage() {
-    const { name, max, min, sortType, sideNav } = useProductSearchParams();
+    const { SortAndFilters } = useSortAndFilters();
+    const searchParams = useSearchParams();
+
+    const { max, min, sortType } = SortAndFilters
+
+    const name = searchParams.get('name')
+    const newName = name ?? undefined
+    const sideNav = searchParams.get('sideNav');
     const mainSectionRef = useRef<HTMLDivElement>(null)
     const router = useRouter()
     const pathname = usePathname()
@@ -49,7 +56,7 @@ export default function ProductsPage() {
             <NavBar />
             <SearchBar />
             <Banner />
-            <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={sideNav} />
+            <ItemsSection name={newName} max={max} min={min} sortType={sortType} sideNav={sideNav} />
             <Footer />
         </div>
 
@@ -62,19 +69,8 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
 
     useEffect(() => {
 
-        const newName = name === null ? undefined : name
-        const newMin = min === null ? undefined : parseInt(min)
-        const newMax = max === null ? undefined : parseInt(max)
-        const newPriceSort = sortType === null ? undefined : "LOW_TO_HIGH"
-
-        // Filter keys that start with "subDir"
-        // const subDirsKeys = Array.from(searchParams.keys()).filter(key => key.startsWith('subDir'));
-        // const subDirsValues = subDirsKeys.map(key => searchParams.get(key)).filter(value => value !== null) as string[];
-
-        // const subDirsResult = subDirsValues.length === 0 ? undefined : subDirsValues
-
         async function getDataAndSetProducts() {
-            const data = await getProducts(undefined, newName, newMin, newMax, newPriceSort)
+            const data = await getProducts(undefined, name, min, max, sortType)
             setDisplayItems(data);
         }
 
@@ -83,10 +79,9 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
 
 
     return displayItems ? (
-        <div className="flex flex-col mt-[5vh] ssm:gap-[5vw] sm:flex-row">
-            <div className="sticky top-[13vh] h-fit pb-[10vh] sm:pb-0 z-10 bg-white w-fit max-w-fit mx-auto sm:mx-0">
-                <SortAndFilter itemsLength={displayItems.size}/>
-            </div>
+        <div className=" flex flex-col mt-[5vh] ssm:gap-[5vw]
+         sm:flex-row" id="displayItems">
+            <SortAndFilter itemsLength={displayItems.size} />
             <DisplayItemsGrid products={displayItems} />
         </div>
     )
@@ -97,14 +92,3 @@ const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType
         prevProps.min === nextProps.min &&
         prevProps.sortType === nextProps.sortType
 })
-
-function useProductSearchParams() {
-    const searchParams = useSearchParams();
-    return {
-        name: searchParams.get('name'),
-        max: searchParams.get('max'),
-        min: searchParams.get('min'),
-        sortType: searchParams.get('sortType'),
-        sideNav: searchParams.get('sideNav')
-    };
-}

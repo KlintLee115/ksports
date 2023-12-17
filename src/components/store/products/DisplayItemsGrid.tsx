@@ -1,5 +1,4 @@
 import React from "react";
-import ProductsLoadingCircle from "../../ProductsLoadingCircle";
 import { productsStorageType } from "../../../global/general";
 import { useCookies } from "react-cookie";
 import Image from 'next/image'
@@ -9,11 +8,11 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
     const [cookies, setCookie] = useCookies(['cart']);
     const cart = cookies.cart as { [key: string]: { itemName: string, imageSrc: string, quantity: number, price: number } }
 
-    if (products) {
-
-        return <div className="
-        grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
-        " style={{ gridRowGap: "12vh", gridColumnGap: "7%" }}>
+    return products.size > 0 ? (
+        <div className="
+        h-min sticky sm:mt-[15vh]
+        grid grid-cols-1 sm:grid-cols-2 sm:top-[15vh] lg:grid-cols-3 xl:grid-cols-4
+        " style={{ gridRowGap: "12vh", gridColumnGap: "7%"}}>
 
             {Array.from(products.keys()).map(id => {
 
@@ -25,7 +24,7 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
                         <div className="relative min-h-[30vh]">
                             <Image quality={50} fill={true} sizes="100%" alt="product" src={`/products${imageSrc}`} />
                         </div>
-                        <h4 style={{ margin: "2vh 0" }}>{itemName}</h4>
+                        <h4 className="mx-0 my-[2vh]">{itemName}</h4>
 
                         <div className="flex justify-between items-center">
                             <h5 className="m-0">${price}</h5>
@@ -43,7 +42,7 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
 
                         </div>
                         <div className="flex justify-between items-center">
-                            <h6 style={{ margin: 0 }}>Image by: <a href={authorLink} style={{ textDecoration: "none", color: "rgb(0, 0, 238)" }}>{authorName}</a></h6>
+                            <h6 className="m-0">Image by: <a href={authorLink} style={{ textDecoration: "none", color: "rgb(0, 0, 238)" }}>{authorName}</a></h6>
                             <a href={imageCredit} style={{ fontSize: "0.67em", fontWeight: "bold", textDecoration: "none", color: "rgb(0, 0, 238)" }}>Image source</a>
                         </div>
                     </div>
@@ -52,6 +51,7 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
             })}
 
         </div>
-    }
-    else return <ProductsLoadingCircle />
+    ) : <NoItemsToDisplay />
 }
+
+function NoItemsToDisplay() { return <h3 className="relative left-0 mx-auto top-[13vh]">No items to display</h3> }

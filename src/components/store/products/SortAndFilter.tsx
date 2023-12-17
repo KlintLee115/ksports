@@ -1,33 +1,24 @@
 "use client"
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { PRICE_SORT } from "../../../global/general";
+import { PRICE_SORT, useSortAndFilters } from "../../../global/general";
 
 export default function SortAndFilter({ itemsLength }: { itemsLength: number }) {
 
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const currPathName = usePathname()
-    const newSearchParams = new URLSearchParams(searchParams.toString());
+    const { SortAndFilters, setSortAndFilters } = useSortAndFilters();
 
-    function addParam(key: string, value: string) {
-        newSearchParams.set(key, value)
-        router.push(`${currPathName}?${newSearchParams.toString()}`)
-    }
+    let min: undefined | number = SortAndFilters.min
+    let max: undefined | number = SortAndFilters.max
+    let sortType: undefined | string = SortAndFilters.sortType
 
-    function removeParam(key: string) {
-        newSearchParams.delete(key)
-        router.push(`${currPathName}?${newSearchParams.toString()}`)
-    }
-
-    return <>
+    return <div className="sticky top-[13vh] pb-[5vh] sm:mt-[15vh] sm:top-[15vh] h-fit sm:pb-0 z-10 bg-white w-fit
+     max-w-fit mx-auto sm:mx-0">
         <h3 className="hidden sm:block">{itemsLength} items</h3>
 
         <div className="flex flex-row gap-[10vw] items-baseline sm:flex sm:flex-col sm:gap-0">
             <div>
                 <label style={{ fontWeight: "bold", fontSize: "1.2rem", display: "block", marginTop: "2vh" }}>Price </label>
-                <select onChange={e => addParam("sortType", e.target.value)}
-                    value={searchParams.get("sortType") || PRICE_SORT.LOW_TO_HIGH.toString()}>
+                <select onChange={e => setSortAndFilters({ sortType: e.target.value })}
+                    value={sortType || PRICE_SORT.LOW_TO_HIGH.toString()}>
                     <option value={PRICE_SORT.LOW_TO_HIGH.toString()}>Low to high</option>
                     <option value={PRICE_SORT.HIGH_TO_LOW.toString()}>High to low</option>
                 </select>
@@ -38,35 +29,36 @@ export default function SortAndFilter({ itemsLength }: { itemsLength: number }) 
                 <div style={{ display: "flex" }}>
                     <label>Min: </label>
                     <input
+                        value={min}
                         min={0}
                         onChange={e => {
                             if (e.target.value.toString() === "") {
-                                removeParam('min')
+                                setSortAndFilters({ min:undefined })
                             }
                             else if (e.target.valueAsNumber >= 0) {
-                                addParam("min", e.target.value)
+                                setSortAndFilters({min: e.target.valueAsNumber})
                             }
                         }
                         }
                         type="number" style={{ width: "5rem", marginLeft: "0.5rem", border: "1px solid black" }} />
                 </div>
-                <div style={{ display: "flex", marginTop: "1vh" }}>
+                <div className="flex mt-[1vh]">
                     <label>Max: </label>
                     <input
+                    value={max}
                         min={0}
                         onChange={e => {
                             if (e.target.value.toString() === "") {
-                                removeParam('max')
+                                setSortAndFilters({ max:undefined })
                             }
                             else if (e.target.valueAsNumber >= 0) {
-                                addParam("max", e.target.value)
+                                setSortAndFilters({max: e.target.valueAsNumber})
                             }
                         }}
                         type="number" style={{ width: "5rem", marginLeft: "0.5rem", border: "1px solid black" }} />
                 </div>
             </div>
         </div>
-        <h3 className="sm:hidden">{itemsLength} items</h3>
-
-    </>
+        <h3 className="block sm:hidden">{itemsLength} items</h3>
+    </div>
 }
