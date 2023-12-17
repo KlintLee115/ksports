@@ -10,7 +10,7 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
 
     return products.size > 0 ? (
         <div className="
-        h-min sticky sm:mt-[15vh]
+        h-min sm:mt-[10vh] items-start
         grid grid-cols-1 sm:grid-cols-2 sm:top-[15vh] lg:grid-cols-3 xl:grid-cols-4
         " style={{ gridRowGap: "12vh", gridColumnGap: "7%"}}>
 

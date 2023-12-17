@@ -52,7 +52,7 @@ export default function ProductsPage() {
 
     return <div style={{ width: "90vw", margin: "0 auto" }}>
         <SideNav />
-        <div ref={mainSectionRef} className={sideNav === "true" ? "blur-[3px]" : "blur-0"}>
+        <div ref={mainSectionRef} className={sideNav === "true" ? "blur-[3px]" : "relative blur-0 h-max"}>
             <NavBar />
             <SearchBar />
             <Banner />
@@ -63,32 +63,18 @@ export default function ProductsPage() {
     </div>
 }
 
-const ItemsSection = React.memo<ProductSearchParams>(({ name, max, min, sortType }) => {
+function ItemsSection({ name, max, min, sortType }: ProductSearchParams) {
 
     const [displayItems, setDisplayItems] = useState<productsStorageType>()
 
-    useEffect(() => {
-
-        async function getDataAndSetProducts() {
-            const data = await getProducts(undefined, name, min, max, sortType)
-            setDisplayItems(data);
-        }
-
-        getDataAndSetProducts()
-    }, [name, min, max, sortType])
-
+    useEffect(() => void (async () => setDisplayItems(await getProducts(undefined, name, min, max, sortType)))(), [name, min, max, sortType])
 
     return displayItems ? (
-        <div className=" flex flex-col mt-[5vh] ssm:gap-[5vw]
+        <div className="flex flex-col ssm:gap-[5vw]
          sm:flex-row" id="displayItems">
             <SortAndFilter itemsLength={displayItems.size} />
             <DisplayItemsGrid products={displayItems} />
         </div>
     )
-        : <h3 className="text-center my-[5vh]">No items to display</h3>
-}, (prevProps, nextProps) => {
-    return prevProps.name === nextProps.name &&
-        prevProps.max === nextProps.max &&
-        prevProps.min === nextProps.min &&
-        prevProps.sortType === nextProps.sortType
-})
+        : <h3 className="text-center">No items to display</h3>
+}

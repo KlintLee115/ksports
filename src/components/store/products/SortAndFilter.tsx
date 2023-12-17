@@ -10,11 +10,11 @@ export default function SortAndFilter({ itemsLength }: { itemsLength: number }) 
     let max: undefined | number = SortAndFilters.max
     let sortType: undefined | string = SortAndFilters.sortType
 
-    return <div className="sticky top-[13vh] pb-[5vh] sm:mt-[15vh] sm:top-[15vh] h-fit sm:pb-0 z-10 bg-white w-fit
+    return <div className="h-fit sticky top-[13vh] py-[5vh] sm:py-0 z-10 sm:mt-[10vh] sm:top-[15vh] bg-white w-fit
      max-w-fit mx-auto sm:mx-0">
         <h3 className="hidden sm:block">{itemsLength} items</h3>
 
-        <div className="flex flex-row gap-[10vw] items-baseline sm:flex sm:flex-col sm:gap-0">
+        <div className="flex flex-row gap-[10vw] sm:flex sm:flex-col sm:gap-0 items-baseline">
             <div>
                 <label style={{ fontWeight: "bold", fontSize: "1.2rem", display: "block", marginTop: "2vh" }}>Price </label>
                 <select onChange={e => setSortAndFilters({ sortType: e.target.value })}
@@ -40,7 +40,7 @@ export default function SortAndFilter({ itemsLength }: { itemsLength: number }) 
                             }
                         }
                         }
-                        type="number" style={{ width: "5rem", marginLeft: "0.5rem", border: "1px solid black" }} />
+                        type="number" style={{ width: "5rem", marginLeft: "auto", border: "1px solid black" }} />
                 </div>
                 <div className="flex mt-[1vh]">
                     <label>Max: </label>
@@ -55,7 +55,7 @@ export default function SortAndFilter({ itemsLength }: { itemsLength: number }) 
                                 setSortAndFilters({max: e.target.valueAsNumber})
                             }
                         }}
-                        type="number" style={{ width: "5rem", marginLeft: "0.5rem", border: "1px solid black" }} />
+                        type="number" style={{ width: "5rem", marginLeft: "auto", border: "1px solid black" }} />
                 </div>
             </div>
         </div>
