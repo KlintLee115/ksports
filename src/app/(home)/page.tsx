@@ -26,19 +26,14 @@ export default function ProductsPage() {
 
     const { max, min, sortType } = SortAndFilters
 
-    const name = searchParams.get('name')
-    const newName = name ?? undefined
+    const name = searchParams.get('name') ?? undefined
     const sideNav = searchParams.get('sideNav');
     const mainSectionRef = useRef<HTMLDivElement>(null)
     const router = useRouter()
     const pathname = usePathname()
 
-    const handleMainSectionClick = () => {
-        if (sideNav === 'true') {
-            router.push(pathname);
-        }
-    };
-
+    const handleMainSectionClick = () => sideNav === 'true' && router.push(pathname)
+    
     useEffect(() => {
         const mainSection = mainSectionRef.current;
 
@@ -56,7 +51,7 @@ export default function ProductsPage() {
             <NavBar />
             <SearchBar />
             <Banner />
-            <ItemsSection name={newName} max={max} min={min} sortType={sortType} sideNav={sideNav} />
+            <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={sideNav} />
             <Footer />
         </div>
 
