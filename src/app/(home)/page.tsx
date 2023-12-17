@@ -71,5 +71,5 @@ function ItemsSection({ name, max, min, sortType }: ProductSearchParams) {
             <DisplayItemsGrid products={displayItems} />
         </div>
     )
-        : <h3 className="text-center">No items to display</h3>
+    : <h1 className="my-[10vh] text-center">Loading Items</h1>
 }
