@@ -8,6 +8,8 @@ export const PRICE_SORT = {
     HIGH_TO_LOW: "HIGH_TO_LOW"
 }
 
+export const VERCEL_BLOB_URL = "https://jqvuripaqkeox1hg.public.blob.vercel-storage.com"
+
 type SortAndFilterType = {
     SortAndFilters: {
         min?: number;
@@ -83,6 +85,7 @@ export async function fetchData(endpoint: string, requestData: any) {
 export async function getProducts(ids?: number[], productName?: string, minPrice?: number, maxPrice?: number, priceSort?: string): Promise<productsStorageType> {
 
     try {
+        console.log('start fetching')
         const response = await fetch(`${backendHost}products`,
 
             {
@@ -99,6 +102,7 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
                 })
             })
         const data: any[] = await response.json()
+        console.log('done fetching')
 
         const formattedItems: productsStorageType = new Map()
 
@@ -111,8 +115,8 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
             imageSrc: item.imageSrc,
             quantity: 0
         }))
+        console.log('format items')
 
-        console.log('done')
         return formattedItems
     } catch (error) {
         console.log(error)
