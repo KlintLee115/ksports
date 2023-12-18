@@ -89,6 +89,7 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
         const response = await fetch(`${backendHost}products`,
 
             {
+                cache:'no-store',
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -96,8 +97,8 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
                 body: JSON.stringify({
                     ids,
                     productName,
-                    minPrice: minPrice?.toString(),
-                    maxPrice: maxPrice?.toString(),
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
                     priceSort,
                 })
             })
