@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 import BannerItems from "@/components/store/home/banner/BannerItems";
 
-export default async function HomeSkel() {
+export default function HomeSkel() {
 
   return <div className='relative z-10 mx-6'>
     <nav className="flex justify-between items-center py-4 px-0">

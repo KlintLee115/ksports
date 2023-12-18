@@ -9,7 +9,7 @@ import DisplayItemsGrid from "@/components/store/products/DisplayItemsGrid";
 import SortAndFilter from "@/components/store/products/SortAndFilter";
 import { productsStorageType, getProducts, useSortAndFilters } from "@/global/general";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { memo } from "react";
 import { useState, useEffect, useRef } from "react";
 
 interface ProductSearchParams {
@@ -33,7 +33,7 @@ export default function ProductsPage() {
     const pathname = usePathname()
 
     const handleMainSectionClick = () => sideNav === 'true' && router.push(pathname)
-    
+
     useEffect(() => {
         const mainSection = mainSectionRef.current;
 
@@ -58,18 +58,23 @@ export default function ProductsPage() {
     </div>
 }
 
-function ItemsSection({ name, max, min, sortType }: ProductSearchParams) {
+const ItemsSection = memo<ProductSearchParams>(({ name, max, min, sortType }) => {
 
-    const [displayItems, setDisplayItems] = useState<productsStorageType>()
+    const [displayItems, setDisplayItems] = useState<productsStorageType | null>(null)
 
-    useEffect(() => void (async () => setDisplayItems(await getProducts(undefined, name, min, max, sortType)))(), [name, min, max, sortType])
+    useEffect(() => void (async () => setDisplayItems(await getProducts(undefined, name, min, max, sortType)))(), [])
 
-    return displayItems ? (
+    return displayItems !== null? (
         <div className="flex flex-col ssm:gap-[5vw]
          sm:flex-row" id="displayItems">
             <SortAndFilter itemsLength={displayItems.size} />
             <DisplayItemsGrid products={displayItems} />
         </div>
     )
-    : <h1 className="my-[10vh] text-center">Loading Items</h1>
-}
+        : <h1 className="my-[10vh] text-center">Loading Items</h1>
+}, (prevProps, nextProps) => {
+    return prevProps.name === nextProps.name &&
+        prevProps.max === nextProps.max &&
+        prevProps.min === nextProps.min &&
+        prevProps.sortType === nextProps.sortType;
+});
