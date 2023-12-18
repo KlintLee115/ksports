@@ -22,6 +22,7 @@ const styles: { [key: string]: CSSProperties } = {
         lineHeight: "7vh",
         outline: "none",
         marginBottom: "2vh",
+        textAlign:"center"
     },
 };
 
@@ -49,20 +50,13 @@ export default function TrackMyOrderPage() {
     return (
         <>
             <OtherHeader />
-            <div style={{ margin: "8vh 4vw" }}>
+            <div style={{ margin: "6vh 4vw" }}>
                 <form ref={form} onSubmit={getPurchasedItems}>
-                    <h1 style={{ textAlign: "center" }}>Track Order Status</h1>
+                    <p className="text-center my-[5vh] text-3xl">Track Order Status</p>
                     <input name="number" type="text" style={styles.inputs} placeholder="   Order Number" />
                     <button
                         type="submit"
-                        style={{
-                            width: "100%",
-                            padding: "2vh",
-                            backgroundColor: "blue",
-                            color: "white",
-                            fontSize: "20px",
-                            fontWeight: "bold",
-                        }}
+                        className="w-full p-[2vh] bg-blue-600 text-white font-bold text-xl"
                     >
                         Track
                     </button>
@@ -71,12 +65,10 @@ export default function TrackMyOrderPage() {
                 {purchasedItems.length > 0 ?
                     purchasedItems.map((item: purchasedItemsFormat, index) => {
                         return (
-                            <div key={index} style={{ display: "flex", justifyContent:"space-evenly", alignItems:"center", borderRadius:"1rem", border: "1px solid black", margin: "2vh 0" }}>
-                                <h1 style={{fontSize:"2.5rem"}}>{item.price_data.product_data.name}</h1>
-                                <div>
-                                    <h3>Price: {item.price_data.unit_amount / 100}</h3>
-                                    <h4>Quantity: {item.quantity}</h4>
-                                </div>
+                            <div key={index} className="flex justify-evenly items-center rounded-md mx-0 my-[2vh] py-[3vh]" style={{border: "1px solid black"}}>
+                                <p className="text-xl">{item.price_data.product_data.name}</p>
+                                <p className="text-xl">Price: ${item.price_data.unit_amount / 100}</p>
+                                <p className="text-xl">Quantity: {item.quantity}</p>
                             </div>)
                     })
                     :
