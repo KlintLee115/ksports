@@ -89,7 +89,6 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
         const response = await fetch(`${backendHost}products`,
 
             {
-                cache:'no-store',
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
