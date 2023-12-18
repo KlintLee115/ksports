@@ -79,11 +79,11 @@ function CheckoutItemCard({ id, cookies, setCookie }: {
     return <div key={id} className='flex justify-between flex-wrap gap-[2vw] mb-[2vh] py-[2vh] px-[10vw]'
         style={{ border: "1px solid black", borderRadius: "0.5rem" }}>
         <div className='relative w-[30vw]'>
-            <Image quality={50} fill={true} objectFit='contain' src={`/products${imageSrc}`} alt="Product image" />
+            <Image quality={50} fill={true} objectFit='contain' src={imageSrc} alt="Product image" />
         </div>
         <div className='w-1/2 flex flex-col justify-between gap-[5vh]'>
             <div>
-                <p className='text-4xl m-0 mb-[2vh]'>{itemName}</p>
+                <p className='text-2xl m-0 mb-[2vh]'>{itemName}</p>
                 <p className='text-2xl'>${price}</p>
             </div>
             <div className='flex items-center justify-between'>
@@ -96,9 +96,9 @@ function CheckoutItemCard({ id, cookies, setCookie }: {
                     className='bg-red-500 m-0 text-center py-0 px-[20px]' style={{ lineHeight: "6vh" }}>Remove</button>
 
                 <div className='flex justify-evenly'>
-                    <h2 className='w-[30px] cursor-pointer' onClick={() => { setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity - 1, price: price } }) }}>-</h2>
-                    <h2 className='w-[30px]'>{quantity}</h2>
-                    <h2 className='w-[30px] cursor-pointer' onClick={() => { setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity + 1, price: price } }) }}>+</h2>
+                    <p className='w-[30px] cursor-pointer text-2xl' onClick={() => { setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity - 1, price: price } }) }}>-</p>
+                    <p className='w-[30px] text-2xl'>{quantity}</p>
+                    <p className='w-[30px] cursor-pointer text-2xl' onClick={() => { setCookie('cart', { ...cart, [id]: { itemName: itemName, imageSrc: imageSrc, quantity: quantity + 1, price: price } }) }}>+</p>
                 </div>
             </div>
         </div>

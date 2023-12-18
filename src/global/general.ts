@@ -108,7 +108,7 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
 
         data.forEach(item => formattedItems.set(item.id, {
             itemName: item.itemName,
-            price: item.price,
+            price: item.price/100,
             authorLink: item.authorLink,
             authorName: item.authorName,
             imageCredit: item.imageCredit,
