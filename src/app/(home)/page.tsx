@@ -21,10 +21,9 @@ interface ProductSearchParams {
 }
 
 export default function ProductsPage() {
-    const { SortAndFilters } = useSortAndFilters();
     const searchParams = useSearchParams();
 
-    const { max, min, sortType } = SortAndFilters
+    const { max, min, sortType } = useSortAndFilters().SortAndFilters
 
     const name = searchParams.get('name') ?? undefined
     const sideNav = searchParams.get('sideNav');
@@ -62,7 +61,7 @@ const ItemsSection = memo<ProductSearchParams>(({ name, max, min, sortType }) =>
 
     const [displayItems, setDisplayItems] = useState<productsStorageType | null>(null)
 
-    useEffect(() => void (async () => setDisplayItems(await getProducts(undefined, name, min, max, sortType)))(), [])
+    useEffect(() => void (async () => setDisplayItems(await getProducts(undefined, name, min, max, sortType)))(), [max, min, sortType, name])
 
     return displayItems !== null? (
         <div className="flex flex-col ssm:gap-[5vw]

@@ -79,7 +79,7 @@ function CheckoutItemCard({ id, cookies, setCookie }: {
     return <div key={id} className='flex justify-between flex-wrap gap-[2vw] mb-[2vh] py-[2vh] px-[10vw]'
         style={{ border: "1px solid black", borderRadius: "0.5rem" }}>
         <div className='relative w-[30vw]'>
-            <Image quality={50} fill={true} objectFit='contain' src={imageSrc} alt="Product image" />
+            <Image quality={50} fill={true} objectFit='contain' src={`/${imageSrc}`} alt="Product image" />
         </div>
         <div className='w-1/2 flex flex-col justify-between gap-[5vh]'>
             <div>
