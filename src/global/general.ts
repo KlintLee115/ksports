@@ -8,13 +8,12 @@ export const PRICE_SORT = {
     HIGH_TO_LOW: "HIGH_TO_LOW"
 }
 
-export const VERCEL_BLOB_URL = "https://jqvuripaqkeox1hg.public.blob.vercel-storage.com"
-
 type SortAndFilterType = {
     SortAndFilters: {
         min?: number;
         max?: number;
         sortType?: string;
+        name?: string
     };
     setSortAndFilters: (SortAndFilters: Partial<SortAndFilterType['SortAndFilters']>) => void;
 }
@@ -40,10 +39,19 @@ export type checkoutItemStructure = {
 
 export type productsStorageType = Map<number, productsType>
 
+export const useIsSideNavOpened = create<{
+    IsSideNavOpened: boolean;
+    setIsSideNavOpened: (newIsSideNavOpened: boolean) => void
+}>((set) => ({
+    IsSideNavOpened: false,
+    setIsSideNavOpened: (newIsSideNavOpened) => set({ IsSideNavOpened: newIsSideNavOpened }),
+}))
+
 export const useSortAndFilters = create<SortAndFilterType>((set) => ({
     SortAndFilters: {
         min: undefined,
         max: undefined,
+        name: undefined,
         sortType: undefined
     },
     setSortAndFilters: (newSortAndFilters) => {
@@ -95,8 +103,8 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
                 body: JSON.stringify({
                     ids,
                     productName,
-                    minPrice: minPrice ? minPrice*100 : undefined,
-                    maxPrice: maxPrice ? maxPrice*100 : undefined,
+                    minPrice: minPrice ? minPrice * 100 : undefined,
+                    maxPrice: maxPrice ? maxPrice * 100 : undefined,
                     priceSort,
                 })
             })
@@ -106,7 +114,7 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
 
         data.forEach(item => formattedItems.set(item.id, {
             itemName: item.itemName,
-            price: item.price/100,
+            price: item.price / 100,
             authorLink: item.authorLink,
             authorName: item.authorName,
             imageCredit: item.imageCredit,

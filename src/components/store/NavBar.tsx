@@ -1,17 +1,16 @@
 "use client"
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useIsSideNavOpened } from '@/global/general'
+import { useRouter } from 'next/navigation'
 
 export default () => {
 
-    const pathName = usePathname()
-    const searchParams = useSearchParams()
-    const newSearchParams = new URLSearchParams(searchParams)
+    const {setIsSideNavOpened} = useIsSideNavOpened()
+    // let currUserEmail: null | string = ''
 
-    let currUserEmail: null | string = ''
-    if (typeof window !== 'undefined') {
-        currUserEmail = localStorage.getItem('currUserEmail')
-    }
+    // if (typeof window !== 'undefined') {
+    //     currUserEmail = localStorage.getItem('currUserEmail')
+    // }
 
     const router = useRouter();
 
@@ -31,10 +30,7 @@ export default () => {
 
     return (
         <nav className="flex justify-between items-center py-4 px-0">
-            <img className="navIcons" width={500} height={500} alt="menu-button" onClick={() => {
-                newSearchParams.set('sideNav', "true")
-                router.push(`${pathName}?${newSearchParams.toString()}`)
-            }} src={'/icons/hamburger.png'} />
+            <img className="navIcons" width={500} height={500} alt="menu-button" onClick={() => setIsSideNavOpened(true)} src={'/icons/hamburger.png'} />
 
             <h3 onClick={() => router.push('/')} className="cursor-pointer bg-blue-600 absolute left-1/2 px-4 py-2 text-white transform -translate-x-1/2">K Sports</h3>
 

@@ -1,22 +1,19 @@
 "use client"
 
+import { useIsSideNavOpened } from '@/global/general';
 import './SideNav.css'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export default function SideNav() {
 
     const router = useRouter();
-    const searchParams = useSearchParams();
+    const {IsSideNavOpened, setIsSideNavOpened} = useIsSideNavOpened()
 
     const handleAsideProductsMenuClick = (linkTo: string) => {
 
-        if (linkTo !== '/products') {
-            router.push(linkTo)
-        }
-        else {
-            const newSearchParams = new URLSearchParams(searchParams)
-            newSearchParams.delete('sideNav')
-            router.push(`${linkTo}?${newSearchParams.toString()}`)
+        setIsSideNavOpened(false)
+        if (linkTo !== '/') {
+            router.push('/trackmyorder')
         }
     }
 
@@ -31,7 +28,7 @@ export default function SideNav() {
     return (
         <aside className={`fixed left-0 top-0 bottom-0 overflow-hidden transition-all duration-300
         py-[10vh] px-[0]
-         ${searchParams.get('sideNav') === "true" ?
+         ${IsSideNavOpened ?
                 'z-20 px-[2vw] border-0 bg-cyan-300 w-full sm:w-fit' : 'w-0'}`}>
             <AsideProductsNavLink key={"HOME"} linkTo="/" displayText='HOME' />
             <AsideProductsNavLink key={"tmo"} linkTo="/trackmyorder" displayText='TRACK MY ORDER' />

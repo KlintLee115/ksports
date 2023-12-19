@@ -7,8 +7,7 @@ import SideNav from "@/components/store/SideNav/SideNav";
 import Banner from "@/components/store/home/banner/Banner";
 import DisplayItemsGrid from "@/components/store/products/DisplayItemsGrid";
 import SortAndFilter from "@/components/store/products/SortAndFilter";
-import { productsStorageType, getProducts, useSortAndFilters } from "@/global/general";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { productsStorageType, getProducts, useSortAndFilters, useIsSideNavOpened } from "@/global/general";
 import React, { memo } from "react";
 import { useState, useEffect, useRef } from "react";
 
@@ -17,21 +16,16 @@ interface ProductSearchParams {
     max: number | undefined;
     min: number | undefined;
     sortType: string | undefined;
-    sideNav: string | null;
+    sideNav: boolean | undefined;
 }
 
 export default function ProductsPage() {
-    const searchParams = useSearchParams();
 
-    const { max, min, sortType } = useSortAndFilters().SortAndFilters
+    const { max, min, sortType, name } = useSortAndFilters().SortAndFilters
 
-    const name = searchParams.get('name') ?? undefined
-    const sideNav = searchParams.get('sideNav');
+    const {IsSideNavOpened, setIsSideNavOpened} = useIsSideNavOpened()
     const mainSectionRef = useRef<HTMLDivElement>(null)
-    const router = useRouter()
-    const pathname = usePathname()
-
-    const handleMainSectionClick = () => sideNav === 'true' && router.push(pathname)
+    const handleMainSectionClick = () => IsSideNavOpened && setIsSideNavOpened(false)
 
     useEffect(() => {
         const mainSection = mainSectionRef.current;
@@ -42,15 +36,15 @@ export default function ProductsPage() {
 
             return () => mainSection.removeEventListener('click', handleMainSectionClick)
         }
-    }, [sideNav])
+    }, [IsSideNavOpened])
 
     return <div style={{ width: "90vw", margin: "0 auto" }}>
         <SideNav />
-        <div ref={mainSectionRef} className={sideNav === "true" ? "blur-[3px]" : "relative blur-0 h-max"}>
+        <div ref={mainSectionRef} className={IsSideNavOpened ? "blur-[3px]" : "relative blur-0 h-max"}>
             <NavBar />
             <SearchBar />
             <Banner />
-            <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={sideNav} />
+            <ItemsSection name={name} max={max} min={min} sortType={sortType} sideNav={IsSideNavOpened} />
             <Footer />
         </div>
 
