@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const BannerProductsInfo:
     Map<number, string> = new Map([
-        [2, `${VERCEL_BLOB_URL}/sara-kurfess-_VfvnjbKFu4-unsplash.jpg`],
+        [2, `${VERCEL_BLOB_URL}/red-adidas-shoe`],
         [3, `${VERCEL_BLOB_URL}/White%20Adidas%20shoe`],
         [8, `${VERCEL_BLOB_URL}/eddie-palmore-white-adidas-shoes.jpg`]])
 
