@@ -22,7 +22,7 @@ export default function ProductsDisplayGrid({ products }: { products: productsSt
                 return (
                     <div key={id} className="sm:w-auto sm:flex flex-col sm:justify-end mx-auto flex-grow">
                         <div className="relative min-h-[30vh]">
-                            <Image quality={50} fill={true} sizes="100%" alt="product" src={imageSrc} />
+                            <Image quality={50} fill={true} sizes="100%" alt="product" src={`/${imageSrc}`}/>
                         </div>
                         <h4 className="mx-0 my-[2vh]">{itemName}</h4>
 

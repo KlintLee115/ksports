@@ -1,11 +1,10 @@
-import { VERCEL_BLOB_URL } from "@/global/general";
 import Image from "next/image";
 
 const BannerProductsInfo:
     Map<number, string> = new Map([
-        [2, `${VERCEL_BLOB_URL}/red-adidas-shoe`],
-        [3, `${VERCEL_BLOB_URL}/White%20Adidas%20shoe`],
-        [8, `${VERCEL_BLOB_URL}/eddie-palmore-white-adidas-shoes.jpg`]])
+        [2, '/products/Adidas-all-court-basketball.jpg'],
+        [3, '/products/Adidas-grey-deerupt.jpg'],
+        [8, '/products/grailify-ju4-jsQ8jmk-unsplash.jpg']])
 
 const BannerItems: JSX.Element[] = []
 
