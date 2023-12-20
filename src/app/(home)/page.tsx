@@ -58,7 +58,7 @@ const ItemsSection = memo<ProductSearchParams>(({ name, max, min, sortType }) =>
     useEffect(() => void (async () => setDisplayItems(await getProducts(undefined, name, min, max, sortType)))(), [max, min, sortType, name])
 
     return displayItems !== null? (
-        <div className="flex flex-col ssm:gap-[5vw]
+        <div className="flex flex-col justify-center ssm:gap-[5vw]
          sm:flex-row" id="displayItems">
             <SortAndFilter itemsLength={displayItems.size} />
             <DisplayItemsGrid products={displayItems} />
