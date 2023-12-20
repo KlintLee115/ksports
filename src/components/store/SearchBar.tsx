@@ -1,15 +1,10 @@
 "use client"
 
 import { useSortAndFilters } from "@/global/general";
-import { useSearchParams } from "next/navigation";
-import { useRef } from "react";
 
 export default function SearchBar() {
 
-    const searchParams = useSearchParams();
-    const { setSortAndFilters } = useSortAndFilters()
-
-    const inputElement = useRef<HTMLInputElement>(null)
+    const {SortAndFilters, setSortAndFilters } = useSortAndFilters()
 
     return <div className="sticky py-[3vh] top-0 right-0 z-[20] bg-white">
         <div className="flex py-[2vh] bg-[#F3F5F5] rounded-xl">
@@ -18,8 +13,7 @@ export default function SearchBar() {
              w-[1.5rem] aspect-square h-full"
                     src="/icons/search.png" /></label>
             <input
-                ref={inputElement}
-                value={searchParams.get('name') ?? ""}
+                value={SortAndFilters.name}
                 onChange={(e) => {
                     const newName = e.target.value 
                     setSortAndFilters({name: newName === "" ? undefined :newName})
