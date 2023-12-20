@@ -1,13 +1,14 @@
 "use client"
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSortAndFilters } from "@/global/general";
+import { useSearchParams } from "next/navigation";
 import { useRef } from "react";
 
 export default function SearchBar() {
 
     const searchParams = useSearchParams();
-    const router = useRouter();
-    const pathName = usePathname()
+    const { setSortAndFilters } = useSortAndFilters()
+
     const inputElement = useRef<HTMLInputElement>(null)
 
     return <div className="sticky py-[3vh] top-0 right-0 z-[20] bg-white">
@@ -20,15 +21,8 @@ export default function SearchBar() {
                 ref={inputElement}
                 value={searchParams.get('name') ?? ""}
                 onChange={(e) => {
-                    const newSearchParams = new URLSearchParams(searchParams.toString());
-
-                    if (e.target.value === "") {
-                        newSearchParams.delete('name')
-                    }
-                    else {
-                        newSearchParams.set("name", e.target.value)
-                    }
-                    router.push(`${pathName}?${newSearchParams.toString()}#displayItems`)
+                    const newName = e.target.value 
+                    setSortAndFilters({name: newName === "" ? undefined :newName})
                 }}
                 style={{
                     marginLeft: "1rem", fontSize: "1.1rem",
