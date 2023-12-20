@@ -48,7 +48,7 @@ export default function HomeSkel() {
       </div>
     </div>
 
-    <h1 className="my-[10vh]">Loading Items</h1>
+    <h1 className="my-[10vh] text-center">Loading Items</h1>
 
     <Footer />
   </div>
