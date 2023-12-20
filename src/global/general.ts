@@ -13,7 +13,6 @@ type SortAndFilterType = {
         min?: number;
         max?: number;
         sortType?: string;
-        name?: string
     };
     setSortAndFilters: (SortAndFilters: Partial<SortAndFilterType['SortAndFilters']>) => void;
 }
@@ -51,7 +50,6 @@ export const useSortAndFilters = create<SortAndFilterType>((set) => ({
     SortAndFilters: {
         min: undefined,
         max: undefined,
-        name: undefined,
         sortType: undefined
     },
     setSortAndFilters: (newSortAndFilters) => {

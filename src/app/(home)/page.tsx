@@ -8,6 +8,7 @@ import Banner from "@/components/store/home/banner/Banner";
 import DisplayItemsGrid from "@/components/store/products/DisplayItemsGrid";
 import SortAndFilter from "@/components/store/products/SortAndFilter";
 import { productsStorageType, getProducts, useSortAndFilters, useIsSideNavOpened } from "@/global/general";
+import { useSearchParams } from "next/navigation";
 import React, { memo } from "react";
 import { useState, useEffect, useRef } from "react";
 
@@ -21,7 +22,11 @@ interface ProductSearchParams {
 
 export default function ProductsPage() {
 
-    const { max, min, sortType, name } = useSortAndFilters().SortAndFilters
+    const { SortAndFilters } = useSortAndFilters();
+    const searchParams = useSearchParams();
+
+    const { max, min, sortType } = SortAndFilters
+    const name = searchParams.get('name') ?? undefined
 
     const {IsSideNavOpened, setIsSideNavOpened} = useIsSideNavOpened()
     const mainSectionRef = useRef<HTMLDivElement>(null)
