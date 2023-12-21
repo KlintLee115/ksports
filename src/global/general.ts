@@ -91,6 +91,7 @@ export async function fetchData(endpoint: string, requestData: any) {
 export async function getProducts(ids?: number[], productName?: string, minPrice?: number, maxPrice?: number, priceSort?: string): Promise<productsStorageType> {
 
     try {
+        console.log('started')
         const response = await fetch(`${backendHost}products`,
 
             {
@@ -107,6 +108,7 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
                 })
             })
         const data: any[] = await response.json()
+        console.log('done')
 
         const formattedItems: productsStorageType = new Map()
 
