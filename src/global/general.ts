@@ -121,6 +121,7 @@ export async function getProducts(ids?: number[], productName?: string, minPrice
         }))
 
         return formattedItems
+        
     } catch (error) {
         console.log(error)
         return new Map()
