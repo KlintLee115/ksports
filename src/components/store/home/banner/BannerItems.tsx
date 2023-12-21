@@ -2,9 +2,9 @@ import Image from "next/image";
 
 const BannerProductsInfo:
     Map<number, string> = new Map([
-        [2, '/products/Adidas-all-court-basketball.jpg'],
-        [3, '/products/Adidas-grey-deerupt.jpg'],
-        [8, '/products/grailify-ju4-jsQ8jmk-unsplash.jpg']])
+        [2, 'https://jqvuripaqkeox1hg.public.blob.vercel-storage.com/red-adidas-shoe'],
+        [3, 'https://jqvuripaqkeox1hg.public.blob.vercel-storage.com/green-nike-shoe'],
+        [8, 'https://jqvuripaqkeox1hg.public.blob.vercel-storage.com/blackadidasshoe']])
 
 const BannerItems: JSX.Element[] = []
 
